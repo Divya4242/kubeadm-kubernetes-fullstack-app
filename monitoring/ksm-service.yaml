@@ -12,11 +12,11 @@ spec:
     - name: http
       port: 8080
       targetPort: 8080
-      nodePort: 30011
+      nodePort: 30089
     - name: telemetry
       port: 8081
       targetPort: 8081
-      nodePort: 30012
+      nodePort: 30090
   type: NodePort
   selector:
     app: kube-state-metrics

@@ -1,0 +1,13 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-monitoring-to-default-gateway
+  namespace: monitoring  # 👈 Grant must be in the target namespace (where Gateway is)
+spec:
+  to: 
+  - group: ""
+    kind: Service
+  from:
+  - group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    namespace: default
