@@ -1,0 +1,22 @@
+# This is the kube-state-metrics service file that uses a NodePort type of service. A NodePort service reserves a port on the node machine,
+# allowing us to access the service using the node's IP address and the reserved port. Ex: http://<node-public-ip>:port 
+# to access kube-state-metrics from my browser, I chose the NodePort type of service.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-state-metrics
+  namespace: monitoring
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      nodePort: 30011
+    - name: telemetry
+      port: 8081
+      targetPort: 8081
+      nodePort: 30012
+  type: NodePort
+  selector:
+    app: kube-state-metrics

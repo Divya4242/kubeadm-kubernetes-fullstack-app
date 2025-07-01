@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: divyapatel42/divya-chat-app-kubernetes:chatrajbackv1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        - name: MONGODB_URI
+          value: "mongodb://root:example@10.107.246.241:27017/Ecommerce?authSource=admin"
+        - name: JWT_SECRET
+          value: "AIzaSyA14yEacV8nlFAqwRK14CvVml-3zHNlD3g"
+        - name: REDIS_HOST
+          value: "10.108.148.37"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: REDIS_PASSWORD
+          value: "redis123"
+        - name: GOOGLE_AI_KEY
+          value: "AIzaSyA14yEacV8nlFAqwRK14CvVml-3zHNlD3g"

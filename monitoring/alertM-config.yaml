@@ -1,0 +1,37 @@
+# This is the ConfigMap for Alertmanager. Within it, you can see `alertmanager.yml`, which will be bound to the Alertmanager pod. 
+# Before starting Alertmanager, we need to configure it to use this email configuration for sending alerts based on the rules specified in
+# Prometheus. For better readability and understanding, I created a ConfigMap for the Alertmanager pod.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-config
+  namespace: monitoring
+data:
+  alertmanager.yml: |
+    global:
+      resolve_timeout: 5m
+
+    route:
+      receiver: 'Mail Alert'
+      group_by: [ alertname ]
+      repeat_interval: 30s
+      group_wait: 15s
+      group_interval: 15s
+
+    receivers:
+      - name: 'Mail Alert'
+        email_configs:
+          - smarthost: smtp.gmail.com:587
+            auth_username: 'divyakpatel42@gmail.com' # REPLACE IT 
+            auth_password: 'srrw pjvt pqte oxdr' # REPLACE IT 
+            from: 'divyakpatel42@gmail.com' # REPLACE IT 
+            to: 'divya.patel@gmail.com' # REPLACE IT 
+            headers:
+              subject: 'Prometheus Mail Alerts'
+    inhibit_rules:
+      - source_match:
+          severity: 'critical'
+        target_match:
+          severity: 'warning'
+        equal: ['alertname', 'dev', 'instance']

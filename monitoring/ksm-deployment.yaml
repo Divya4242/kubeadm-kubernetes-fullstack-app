@@ -1,0 +1,27 @@
+# Here is the deployment file for the kubestatemetrics. I've set up 1 replica, meaning 1 pod/container will be created for the kube-state-metrics.
+# kube-state-metrics simplifies Kubernetes monitoring by providing detailed, real-time metrics about the state and health of Kubernetes objects. 
+# These metrics are crucial for understanding cluster behavior, diagnosing issues, and ensuring the reliability of applications deployed
+# in Kubernetes environments.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-state-metrics
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-state-metrics
+  template:
+    metadata:
+      labels:
+        app: kube-state-metrics
+    spec:
+      serviceAccountName: kube-state-metrics
+      containers:
+        - name: kube-state-metrics
+          image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.8.2
+          ports:
+          - containerPort: 8080
+          - containerPort: 8081
