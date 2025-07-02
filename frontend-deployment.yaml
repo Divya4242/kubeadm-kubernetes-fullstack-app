@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: divyapatel42/divya-chat-app-kubernetes:dnsbackend
+        image: divyapatel42/divya-chat-app-kubernetes:newversion
         ports:
         - containerPort: 80
         env:
